@@ -8,13 +8,23 @@
 //Nizej bede uzywal slow tablica - plansza zamiennie (beda znaczyly to samo)
 
 
+
+//Struktura ktora oprocz wartosci czy komorka zyje bedzie przechowywac informacje o kolorze komorki
+// state - okresla czy komorka zyje (1) lub nie zyje (0)
+// color - okresla kolor komorki, zakres 0-255 (jeden bajt)
+typedef struct pkt {
+    bool state;     
+    int color;
+} Point;
+
+
 /*Funkja wczytujaca punkty z pliku i zwracajaca talibce do gry wraz z naniesionymi punktami
 Return: tablica (macierz) z punkatmi, gotowa do rozgrywki
 Argumenty:
 File - plik wejsciowy z danymi
 int, int - rozmiar tablicy wczytany wczesniej
 */
-int** readPoint(FILE*, int , int);
+Point** readPoint(FILE*, int , int);
 
 
 /*Funkja wczytujaca typ granicy do wyboru: zamknieta martwa (komorki nie oddzialywuja z tablica) otwarta (komurki
@@ -45,7 +55,7 @@ Argumenty:
 int** - tablica z punktami
 int, int - rozmiar tablicy wczytany wczesniej
 */
-int** move(int**, int, int);
+Point** move(Point**, int, int);
 
 
 /*Funkja rysujaca na ekranie plansze
@@ -54,7 +64,7 @@ Argumenty:
 int** - plansza
 int, int - rozmiar tablicy wczytany wczesniej
 */
-void showTable(int**, int, int);
+void showTable(Point**, int, int);
 
 
 
