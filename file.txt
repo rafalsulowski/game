@@ -1,0 +1,9 @@
+Rozmiar planszy: 20x20
+Punkty żywych komórek:
+(1,1)
+(1,2)
+(2,1)
+(2,2)
+(2,3)
+(3,3)
+Granice: _Zamkniete / Otwarte
