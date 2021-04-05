@@ -151,6 +151,24 @@ Point** moveBorderIsLive(Point **tab, int sizeX, int sizeY)
             if(tab[i][j].state == 3)
                 continue;
             
+            //warunki wynikajace z zywej granicy
+            if(i == 0 && j == 0)
+                counter += 5;
+            else if(i == 0 && j == sizeX - 1)
+                counter += 5;
+            else if(i == 0 && j > 0)
+                counter += 3;
+            else if(i > 0 && j == 0)
+                counter += 3;
+            else if(i == sizeY - 1 && j == 0)
+                counter += 5;
+            if(i == sizeY - 1 && j > 0)
+                counter += 3;
+            else if(i == sizeY - 1 && j == sizeX - 1)
+                counter += 5;
+            else if(i > 0 && j == sizeX - 1)
+                counter += 3;
+
             //gorny pasek
             if(i > 0 && j > 0 && tab[i - 1][j - 1].state == 1)  //gorny lewy
                 counter++;
@@ -167,13 +185,13 @@ Point** moveBorderIsLive(Point **tab, int sizeX, int sizeY)
             if(i < sizeY - 1 && j < sizeX - 1 && tab[i + 1][j + 1].state == 1)  //dolny prawy
                 counter++;
 
-                // pozostale boki
+            // pozostale boki
             if(j > 0 && tab[i][j - 1].state == 1)  //srodkowy lewy
                 counter++;
             if(j < sizeX - 1 && tab[i][j + 1].state == 1)  //srodkowy prawy
                 counter++;
 
-                //sprawdzenie czy powinny ozyc/zginac jakies komurki
+            //sprawdzenie czy powinny ozyc/zginac jakies komurki
             if(tab[i][j].state == 0 && counter == 3)
                 Ctab[i][j].state = 1;
             
