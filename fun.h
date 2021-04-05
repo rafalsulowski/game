@@ -15,7 +15,7 @@
 // color - okresla kolor komorki, zakres 0-255 (jeden bajt)
 typedef struct pkt {
     int state;
-    int color;
+    char color[24];
 } Point;
 
 
@@ -68,6 +68,7 @@ int, int - rozmiar tablicy wczytany wczesniej
 */
 void showTable(Point**, int, int);
 
-
+void shuffle(int *array, int n);
+void newColor(char parents[3][24], char res[24]);
 
 #endif
