@@ -24,7 +24,6 @@ int main(int argc, char *argv[])
     bool border = readBorderType(in);           //true - granice otwarte, false - granice martwe zamkniete
     Point **tab = readPoint(in, sizeX, sizeY);  //wczytanie punktow z pliku
 
-
     showTable(tab, sizeX, sizeY);
 
     char c;
@@ -34,16 +33,34 @@ int main(int argc, char *argv[])
         scanf("%c", &c);
     } while (c != ' ');
     system("cls");
-    
-    int i = 1;
-    while(true)   //nieskonczona petla rysujaca w odstepach 100ms nastepna iteracje
-    {
-        printf("iteration: %d\n", i++);
-        tab = move(tab, sizeX, sizeY);
-        showTable(tab, sizeX, sizeY);
 
-        Sleep(100);
-        system("cls");
+
+    int i = 1;
+    if(border) 
+    { //granice zywe
+        
+        while(true)
+        {
+            printf("iteration: %d\n", i++);
+            tab = moveBorderIsLive(tab, sizeX, sizeY);
+            showTable(tab, sizeX, sizeY);
+
+            Sleep(100);
+            system("cls");
+        }
+
+    }
+    else
+    { //granice martwe
+        while(true)
+        {
+            printf("iteration: %d\n", i++);
+            tab = moveBorderIsDead(tab, sizeX, sizeY);
+            showTable(tab, sizeX, sizeY);
+
+            Sleep(100);
+            system("cls");
+        }
     }
     
 

@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
+#include <string.h>
 
 //Nizej bede uzywal slow tablica - plansza zamiennie (beda znaczyly to samo)
 
@@ -13,7 +14,7 @@
 // state - okresla czy komorka zyje (1) lub nie zyje (0)
 // color - okresla kolor komorki, zakres 0-255 (jeden bajt)
 typedef struct pkt {
-    bool state;     
+    int state;
     int color;
 } Point;
 
@@ -55,7 +56,8 @@ Argumenty:
 int** - tablica z punktami
 int, int - rozmiar tablicy wczytany wczesniej
 */
-Point** move(Point**, int, int);
+Point** moveBorderIsLive(Point**, int, int);   //dla granicy zywej
+Point** moveBorderIsDead(Point**, int, int);   //dla granicy martwej
 
 
 /*Funkja rysujaca na ekranie plansze
