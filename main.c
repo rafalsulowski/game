@@ -5,6 +5,7 @@
 //#include <Windows.h>
 
 #include "fun.h"
+#include "make_png.h"
 
 
 int main(int argc, char *argv[])
@@ -52,7 +53,8 @@ int main(int argc, char *argv[])
     }
     else
     { //granice martwe
-        while(true)
+    int g=0;
+        while(g!=100)
         {
             printf("iteration: %d\n", i++);
             tab = moveBorderIsDead(tab, sizeX, sizeY);
@@ -60,7 +62,9 @@ int main(int argc, char *argv[])
 
             //Sleep(100);
             //system("cls");
+            g++;
         }
+	generate_png(tab, sizeX, sizeY);
     }
     
 

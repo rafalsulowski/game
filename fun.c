@@ -114,9 +114,9 @@ Point** moveBorderIsDead(Point **tab, int sizeX, int sizeY)
 	        strcpy(Ctab[i][j].color, tab[i][j].color);
         }
 
-    printf("Kontrolne wypisanie Ctab:\n");
+    //printf("Kontrolne wypisanie Ctab:\n");
     //showTable(Ctab, sizeX, sizeY);
-    printf("\n\n");
+    //printf("\n\n");
 
 
     //sprawdzanie przylegania
