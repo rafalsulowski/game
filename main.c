@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include <Windows.h>
+//#include <Windows.h>
 
 #include "fun.h"
 
@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
     {
         scanf("%c", &c);
     } while (c != ' ');
-    system("cls");
+    //system("cls");
 
 
     int i = 1;
@@ -43,10 +43,10 @@ int main(int argc, char *argv[])
         {
             printf("iteration: %d\n", i++);
             tab = moveBorderIsLive(tab, sizeX, sizeY);
-            showTable(tab, sizeX, sizeY);
+            //showTable(tab, sizeX, sizeY);
 
-            Sleep(100);
-            system("cls");
+            //Sleep(100);
+            //system("cls");
         }
 
     }
@@ -56,10 +56,10 @@ int main(int argc, char *argv[])
         {
             printf("iteration: %d\n", i++);
             tab = moveBorderIsDead(tab, sizeX, sizeY);
-            showTable(tab, sizeX, sizeY);
+            //showTable(tab, sizeX, sizeY);
 
-            Sleep(100);
-            system("cls");
+            //Sleep(100);
+            //system("cls");
         }
     }
     

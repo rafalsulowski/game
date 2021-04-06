@@ -66,6 +66,7 @@ Point** readPoint(FILE *in, int sizeX, int sizeY)
 
 void shuffle(int *array, int n)
 {
+	srand(time(0));
 	if(n > 1)
 	{
 		int i;
@@ -80,8 +81,9 @@ void shuffle(int *array, int n)
 }
 
 
-void newColor(char parents[3][24], char res[24])
+void newColor(char parents[3][25], char res[25])
 {
+	srand(time(0));
 	int i;
 	int n = rand() % 24 + 1;
 	int chooseParents[3] = {0, 1, 2};
@@ -97,8 +99,8 @@ void newColor(char parents[3][24], char res[24])
 Point** moveBorderIsDead(Point **tab, int sizeX, int sizeY)
 {
     int counter = 0;
-    char colors[3][24];
-    char new[24];
+    char colors[3][25];
+    char new[25];
 
     //tworzenie kopii glownej tablicy
     Point **Ctab = (Point**) malloc(sizeof(Point*) * sizeY);
@@ -113,7 +115,7 @@ Point** moveBorderIsDead(Point **tab, int sizeX, int sizeY)
         }
 
     printf("Kontrolne wypisanie Ctab:\n");
-    showTable(Ctab, sizeX, sizeY);
+    //showTable(Ctab, sizeX, sizeY);
     printf("\n\n");
 
 
@@ -128,25 +130,57 @@ Point** moveBorderIsDead(Point **tab, int sizeX, int sizeY)
             
             //gorny pasek
             if(i > 0 && j > 0 && tab[i - 1][j - 1].state == 1)  //gorny lewy
-		strcpy(colors[counter++], tab[i-1][j-1].color);
+	    {
+		    if(counter <= 2)
+		   	 strcpy(colors[counter], tab[i-1][j-1].color);
+		    counter++;
+	    }
             if(i > 0 && tab[i - 1][j].state == 1)  //gorny srodkowy
-		strcpy(colors[counter++], tab[i-1][j].color);
+	    {
+		    if(counter <= 2)
+		    	strcpy(colors[counter], tab[i-1][j].color);
+		    counter++;
+	    }
             if(i > 0 && j < sizeX - 1 && tab[i - 1][j + 1].state == 1)  //gorny prawy
-                strcpy(colors[counter++], tab[i-1][j+1].color);
+	    {
+		    if (counter <= 2)
+			    strcpy(colors[counter], tab[i-1][j+1].color);
+		    counter++;
+	    }
 
             //dolny pasek pasek
             if(i < sizeY - 1 && j > 0 && tab[i + 1][j - 1].state == 1)  //dolny lewy
-		strcpy(colors[counter++], tab[i+1][j-1].color);
+	    {
+		    if(counter <=2)
+		    	strcpy(colors[counter], tab[i+1][j-1].color);
+		    counter++;
+	    }
             if(i < sizeY - 1 && tab[i + 1][j].state == 1)  //dolny sordkowy
-		strcpy(colors[counter++], tab[i+1][j].color);
+	    {
+		    if(counter <=2)
+		    	strcpy(colors[counter], tab[i+1][j].color);
+		    counter++;
+	    }
             if(i < sizeY - 1 && j < sizeX - 1 && tab[i + 1][j + 1].state == 1)  //dolny prawy
-		strcpy(colors[counter++], tab[i+1][j+1].color);
+	    {
+		    if(counter <= 2)
+		    	strcpy(colors[counter], tab[i+1][j+1].color);
+		    counter++;
+	    }
             
                 // pozostale boki
             if(j > 0 && tab[i][j - 1].state == 1)  //srodkowy lewy
-		strcpy(colors[counter++], tab[i][j-1].color);
+		{
+		    if(counter <= 2)
+			strcpy(colors[counter], tab[i][j-1].color);
+		    counter++;
+		}
             if(j < sizeX - 1 && tab[i][j + 1].state == 1)  //srodkowy prawy
-		strcpy(colors[counter++], tab[i][j+1].color);
+	    {
+		    if(counter <= 2)
+		    	strcpy(colors[counter], tab[i][j+1].color);
+		    counter++;
+	    }
 
                 //sprawdzenie czy powinny ozyc/zginac jakies komurki
             if(tab[i][j].state == 0 && counter == 3){

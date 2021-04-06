@@ -5,6 +5,7 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 //Nizej bede uzywal slow tablica - plansza zamiennie (beda znaczyly to samo)
 
@@ -69,6 +70,6 @@ int, int - rozmiar tablicy wczytany wczesniej
 void showTable(Point**, int, int);
 
 void shuffle(int *array, int n);
-void newColor(char parents[3][24], char res[24]);
+void newColor(char parents[3][25], char res[25]);
 
 #endif
