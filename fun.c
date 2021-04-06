@@ -26,7 +26,7 @@ Point** readPoint(FILE *in, int sizeX, int sizeY)
     fscanf(in, "Punkty żywych komórek:\n"); //ominiecie tekstu
 
     //alokacja tablicy do gry
-    Point **tab = (Point**) malloc(sizeof(Point) * sizeY);
+    Point **tab = (Point**) malloc(sizeof(Point*) * sizeY);
     for(int i = 0; i < sizeY; i++)
         *(tab + i) = (Point*) malloc(sizeof(Point) * sizeX);
 
@@ -34,7 +34,7 @@ Point** readPoint(FILE *in, int sizeX, int sizeY)
         for(int j = 0; j < sizeX; j++)
         {
             tab[i][j].state = 0;
-	    strcpy(tab[i][j].color, "000000000000000000000000");
+	        strcpy(tab[i][j].color, "000000000000000000000000");
         }   
 
     //wypelienie talbicy do gry zywymi punktami
@@ -62,6 +62,8 @@ Point** readPoint(FILE *in, int sizeX, int sizeY)
 
     return tab;
 }
+
+
 void shuffle(int *array, int n)
 {
 	if(n > 1)
@@ -76,6 +78,8 @@ void shuffle(int *array, int n)
 		}
 	}
 }
+
+
 void newColor(char parents[3][24], char res[24])
 {
 	int i;
@@ -89,13 +93,15 @@ void newColor(char parents[3][24], char res[24])
 		res[bitsToSwap[i]] = parents[chooseParents[1]][bitsToSwap[i]];
 }
 
+
 Point** moveBorderIsDead(Point **tab, int sizeX, int sizeY)
 {
     int counter = 0;
     char colors[3][24];
     char new[24];
+
     //tworzenie kopii glownej tablicy
-    Point **Ctab = (Point**) malloc(sizeof(Point) * sizeY);
+    Point **Ctab = (Point**) malloc(sizeof(Point*) * sizeY);
     for(int i = 0; i < sizeY; i++)
         *(Ctab + i) = (Point*) malloc(sizeof(Point) * sizeX);
     //przepisywanie wartosci
@@ -103,8 +109,13 @@ Point** moveBorderIsDead(Point **tab, int sizeX, int sizeY)
         for(int j = 0; j < sizeX; j++)
         {
             Ctab[i][j].state = tab[i][j].state;
-	    strcpy(Ctab[i][j].color, tab[i][j].color);
+	        strcpy(Ctab[i][j].color, tab[i][j].color);
         }
+
+    printf("Kontrolne wypisanie Ctab:\n");
+    showTable(Ctab, sizeX, sizeY);
+    printf("\n\n");
+
 
     //sprawdzanie przylegania
     for(int i = 0; i < sizeY; i++)
@@ -158,20 +169,18 @@ Point** moveBorderIsDead(Point **tab, int sizeX, int sizeY)
 
 Point** moveBorderIsLive(Point **tab, int sizeX, int sizeY)
 {
-    int counter = 0;
-    char colors[3][24];
-    char new[24];
+    //int counter = 0;
 
     //tworzenie kopii glownej tablicy
     Point **Ctab = (Point**) malloc(sizeof(Point) * sizeY);
-    for(int i = 0; i < sizeY; i++)
+    /*for(int i = 0; i < sizeY; i++)
         *(Ctab + i) = (Point*) malloc(sizeof(Point) * sizeX);
     //przepisywanie wartosci
     for(int i = 0; i < sizeY; i++)
         for(int j = 0; j < sizeX; j++)
         {
             Ctab[i][j].state = tab[i][j].state;
-	    strcpy(Ctab[i][j].color, tab[i][j].color);
+            Ctab[i][j].color = tab[i][j].color;
         }
 
     //sprawdzanie przylegania
@@ -183,42 +192,56 @@ Point** moveBorderIsLive(Point **tab, int sizeX, int sizeY)
             if(tab[i][j].state == 3)
                 continue;
             
+            //warunki wynikajace z zywej granicy
+            if(i == 0 && j == 0)
+                counter += 5;
+            else if(i == 0 && j == sizeX - 1)
+                counter += 5;
+            else if(i == 0 && j > 0)
+                counter += 3;
+            else if(i > 0 && j == 0)
+                counter += 3;
+            else if(i == sizeY - 1 && j == 0)
+                counter += 5;
+            if(i == sizeY - 1 && j > 0)
+                counter += 3;
+            else if(i == sizeY - 1 && j == sizeX - 1)
+                counter += 5;
+            else if(i > 0 && j == sizeX - 1)
+                counter += 3;
+
             //gorny pasek
             if(i > 0 && j > 0 && tab[i - 1][j - 1].state == 1)  //gorny lewy
-                strcpy(colors[counter++], tab[i-1][j-1].color);
+                counter++;
             if(i > 0 && tab[i - 1][j].state == 1)  //gorny srodkowy
-                strcpy(colors[counter++], tab[i-1][j].color);
+                counter++;
             if(i > 0 && j < sizeX - 1 && tab[i - 1][j + 1].state == 1)  //gorny prawy
-                strcpy(colors[counter++], tab[i-1][j+1].color);
+                counter++;
             
             //dolny pasek pasek
             if(i < sizeY - 1 && j > 0 && tab[i + 1][j - 1].state == 1)  //dolny lewy
-                strcpy(colors[counter++], tab[i+1][j-1].color);
+                counter++;
             if(i < sizeY - 1 && tab[i + 1][j].state == 1)  //dolny sordkowy
-                strcpy(colors[counter++], tab[i+1][j].color);
+                counter++;
             if(i < sizeY - 1 && j < sizeX - 1 && tab[i + 1][j + 1].state == 1)  //dolny prawy
-                strcpy(colors[counter++], tab[i+1][j+1].color);
+                counter++;
 
-                // pozostale boki
+            // pozostale boki
             if(j > 0 && tab[i][j - 1].state == 1)  //srodkowy lewy
-                strcpy(colors[counter++], tab[i][j-1].color);
+                counter++;
             if(j < sizeX - 1 && tab[i][j + 1].state == 1)  //srodkowy prawy
-                strcpy(colors[counter++], tab[i][j+1].color);
+                counter++;
 
-                //sprawdzenie czy powinny ozyc/zginac jakies komórki
-            if(tab[i][j].state == 0 && counter == 3){
-		    Ctab[i][j].state = 1;
-		    newColor(colors, new);
-		    strcpy(Ctab[i][j].color, new);
-	    }
+            //sprawdzenie czy powinny ozyc/zginac jakies komurki
+            if(tab[i][j].state == 0 && counter == 3)
+                Ctab[i][j].state = 1;
+            
             else if(tab[i][j].state == 1 && (counter < 2 || counter > 3) )
-	    {
-		    Ctab[i][j].state = 0;     
-		    strcpy(Ctab[i][j].color, "000000000000000000000000");
-	    }
+                Ctab[i][j].state = 0;     
+                 
             counter = 0;
         }
-    }
+    }*/
 
     return Ctab;
 }

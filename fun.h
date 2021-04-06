@@ -15,7 +15,7 @@
 // color - okresla kolor komorki, zakres 0-255 (jeden bajt)
 typedef struct pkt {
     int state;
-    char color[24];
+    char color[25];
 } Point;
 
 
