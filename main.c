@@ -11,7 +11,8 @@
 int main(int argc, char *argv[])
 {
     srand(time(NULL));
-
+    char *nazwa_out = argc > 3 ? argv[3] : "out.png";
+    int g = argc > 2 ? atoi(argv[2]) : 50;
     FILE *in = argc > 1 ? fopen(argv[1], "r") : NULL;
     if(!in)
     {
@@ -39,35 +40,29 @@ int main(int argc, char *argv[])
     int i = 1;
     if(border) 
     { //granice zywe
-       int g=0; 
-        while(g!=10)
+        while(g!=i-1)
         {
             printf("iteration: %d\n", i++);
             tab = moveBorderIsLive(tab, sizeX, sizeY);
             showTable(tab, sizeX, sizeY);
-		printf("%s \n", tab[6][6].color);
+		//printf("%s \n", tab[6][6].color);
             //Sleep(100);
             //system("cls");
-	    g++;
         }
-	generate_png(tab, sizeX, sizeY);
     }
     else
     { //granice martwe
-    int g=0;
-        while(g!=25)
+        while(g!=i-1)
         {
             printf("iteration: %d\n", i++);
             tab = moveBorderIsDead(tab, sizeX, sizeY);
-            showTable(tab, sizeX, sizeY);
-		printf("%s \n", tab[6][6].color);
+            //showTable(tab, sizeX, sizeY);
+	    //	printf("%s \n", tab[6][6].color);
             //Sleep(100);
             //system("cls");
-            g++;
         }
-	generate_png(tab, sizeX, sizeY);
     }
     
-
+	generate_png(tab, sizeX, sizeY, nazwa_out);
     return 0;
 }

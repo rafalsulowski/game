@@ -3,12 +3,11 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <string.h>
-#include <stdarg.h>
+#include <math.h>
 #include <png.h>
 
-void convert(char *, int*, int*, int*);
+void binToRGB(char *, int*, int*, int*);
 void write_png_file(char*);
-void generate_png(Point **, int, int);
+void generate_png(Point **, int, int, char*);
 
 #endif

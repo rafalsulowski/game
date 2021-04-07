@@ -1,7 +1,5 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include <string.h>
-#include <stdarg.h>
 #include <math.h>
 #include <png.h>
 #include "fun.h"
@@ -17,7 +15,7 @@ png_infop info_ptr;
 int number_of_passes;
 png_bytep * row_pointers;
 
-void convert(char *bin, int *r, int *g, int *b);
+void binToRGB(char *bin, int *r, int *g, int *b);
 
 void write_png_file(char* file_name) {
   FILE *fp = fopen(file_name, "wb");
@@ -64,14 +62,13 @@ void write_png_file(char* file_name) {
   fclose(fp);
 }
 
-void generate_png(Point **tab, int sizeX, int sizeY) {
+void generate_png(Point **tab, int sizeX, int sizeY, char *file_out) {
   width = sizeX;
   height = sizeY;
   bit_depth = 8;
   color_type = PNG_COLOR_TYPE_RGB;
   int R, G, B;
 
-  number_of_passes = 7;
   row_pointers = (png_bytep*) malloc(sizeof(png_bytep) * height);
   for (y=0; y<height; y++)
     row_pointers[y] = (png_byte*) malloc(3 * sizeof(png_byte) * width);
@@ -80,7 +77,7 @@ void generate_png(Point **tab, int sizeX, int sizeY) {
     png_bytep row = row_pointers[y];
     for (x=0; x<width; x++) {
  		
-	convert(tab[y][x].color, &R, &G, &B);
+	binToRGB(tab[y][x].color, &R, &G, &B);
 	png_bytep px = &(row[x * 3]);    
   	
 	px[0]=R;
@@ -89,10 +86,10 @@ void generate_png(Point **tab, int sizeX, int sizeY) {
 	
     }
   }
-  write_png_file("out.png");
+  write_png_file(file_out);
 }
 
-void convert(char *bin, int *r, int *g, int *b) {
+void binToRGB(char *bin, int *r, int *g, int *b) {
 	int czer=0, ziel=0, nieb=0, i, j, c;
 	char d;
 	for(i=0; i<3; i++) {
