@@ -40,7 +40,7 @@ Point** readPoint(FILE *in, int sizeX, int sizeY)
     //wypelienie talbicy do gry zywymi punktami
     int i = 0, bufX, bufY;
     char bin_color[25];
-    while(fscanf(in, "(%d,%d, %s )\n", &bufX, &bufY, bin_color ) == 3)
+    while(fscanf(in, "(%d,%d,%[01])\n", &bufX, &bufY, bin_color ) == 3)
     {
         tab[bufX - 1][bufY - 1].state = 1;
         strcpy(tab[bufX - 1][bufY - 1].color, bin_color);
@@ -360,9 +360,9 @@ void showTable(Point **tab, int sizeX, int sizeY)
     {   
         for(int j = 0; j < sizeX; j++)
         {
-            if(tab[i][j].state == 3)
+            if(tab[j][i].state == 3)
                 printf(" &");
-            else if(tab[i][j].state == 1)
+            else if(tab[j][i].state == 1)
                 printf(" *");
             else
                 printf(" .");

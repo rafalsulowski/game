@@ -69,23 +69,28 @@ void generate_png(Point **tab, int sizeX, int sizeY, char *file_out) {
   color_type = PNG_COLOR_TYPE_RGB;
   int R, G, B;
 
-  row_pointers = (png_bytep*) malloc(sizeof(png_bytep) * height);
-  for (y=0; y<height; y++)
-    row_pointers[y] = (png_byte*) malloc(3 * sizeof(png_byte) * width);
+  row_pointers = (png_bytep*) malloc(sizeof(png_bytep) * height *20);
+  for (y=0; y<height*20; y++)
+    row_pointers[y] = (png_byte*) malloc(3 * sizeof(png_byte) * width *20);
 
   for (y=0; y<height; y++) {
-    png_bytep row = row_pointers[y];
+	  for(int h=0; h<20;h++) {
+    png_bytep row = row_pointers[20*y+h];
     for (x=0; x<width; x++) {
  		
-	binToRGB(tab[y][x].color, &R, &G, &B);
-	png_bytep px = &(row[x * 3]);    
-  	
-	px[0]=R;
-	px[1]=G;
-	px[2]=B;
+	binToRGB(tab[x][y].color, &R, &G, &B);
+	png_bytep px = &(row[x * 60]);    
+  	for(int g=0;g<20;g++) {
+	px[3*g]=R;
+	px[3*g+1]=G;
+	px[3*g+2]=B;
+	}
 	
     }
+	  }
   }
+	width=sizeX*20;
+	height=sizeY*20;
   write_png_file(file_out);
 }
 

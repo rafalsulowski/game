@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <png.h>
+#include "fun.h"
 
 void binToRGB(char *, int*, int*, int*);
 void write_png_file(char*);

@@ -2,7 +2,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-//#include <Windows.h>
+#include <unistd.h>
+
 
 #include "fun.h"
 #include "make_png.h"
@@ -10,7 +11,12 @@
 
 int main(int argc, char *argv[])
 {
+    if(argc==1) {
+    printf("\n Symulator gry w zycie\n Program pobiera liste punktow i drukuje obraz tych punktow po podanej liczbie iteracji.\n\n Linia polecenia: \n\n  ./prog <plik> <liczba> <plik2> \n plik - nazwa z plikiem opisujacym punkty\n liczba - liczba iteracji (dni gry w zycie)\n plik2 - nazwa pliku do ktorego program zapisze obraz po wykonanych iteracjach (nazwa musi miec rozszerzenie .png)\n\n ");
+    return 1;
+    }
     srand(time(NULL));
+
     char *nazwa_out = argc > 3 ? argv[3] : "out.png";
     int g = argc > 2 ? atoi(argv[2]) : 50;
     FILE *in = argc > 1 ? fopen(argv[1], "r") : NULL;
@@ -37,10 +43,10 @@ int main(int argc, char *argv[])
             scanf("%c", &c);
         } while (c != ' ');
         
-        system("cls");
+       // system("cls");
     }
     else{
-        printf("Widok koncowy zostal zapisany jako obraz .png\n");
+        printf("Widok koncowy zostanie zapisany jako %s\n", nazwa_out);
     }
 
     int i = 1;
@@ -54,9 +60,12 @@ int main(int argc, char *argv[])
             {
                 printf("iteration: %d\n", i++);
                 showTable(tab, sizeX, sizeY);
-                Sleep(100);
-                system("cls");
-            }
+
+		printf("\033[2J");
+		printf("\033[0;0f");
+		usleep(150000);
+		
+	    }
         }
     }
     else
@@ -69,13 +78,16 @@ int main(int argc, char *argv[])
             {
                 printf("iteration: %d\n", i++);
                 showTable(tab, sizeX, sizeY);
-                Sleep(100);
-                system("cls");
+		printf("\033[2J");
+		printf("\033[0;0f");
+		usleep(150000);
             }
         }
     }
-    
-	generate_png(tab, sizeX, sizeY, nazwa_out);
+	printf("iteration: %d\n", g);	
+	showTable(tab, sizeX, sizeY);    
+	
+    generate_png(tab, sizeX, sizeY, nazwa_out);
 
     printf("Program poprawnie zakonczyl dzialanie\n");
     return 0;
