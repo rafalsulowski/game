@@ -26,7 +26,7 @@ Point** readPoint(FILE *in, int sizeX, int sizeY)
     fscanf(in, "Punkty żywych komórek:\n"); //ominiecie tekstu
 
     //alokacja tablicy do gry
-    Point **tab = (Point**) malloc(sizeof(Point) * sizeY);
+    Point **tab = (Point**) malloc(sizeof(Point*) * sizeY);
     for(int i = 0; i < sizeY; i++)
         *(tab + i) = (Point*) malloc(sizeof(Point) * sizeX);
 
@@ -69,7 +69,7 @@ Point** moveBorderIsDead(Point **tab, int sizeX, int sizeY)
     int counter = 0;
 
     //tworzenie kopii glownej tablicy
-    Point **Ctab = (Point**) malloc(sizeof(Point) * sizeY);
+    Point **Ctab = (Point**) malloc(sizeof(Point*) * sizeY);
     for(int i = 0; i < sizeY; i++)
         *(Ctab + i) = (Point*) malloc(sizeof(Point) * sizeX);
     //przepisywanie wartosci
@@ -121,8 +121,19 @@ Point** moveBorderIsDead(Point **tab, int sizeX, int sizeY)
             counter = 0;
         }
     }
+    
+    for(int i = 0; i < sizeY; i++)
+        for(int j = 0; j < sizeX; j++)
+        {
+            tab[i][j].state = Ctab[i][j].state;
+            tab[i][j].color = Ctab[i][j].color;
+        }
 
-    return Ctab;
+    for(int i = 0; i < sizeY; i++)
+        free(Ctab[i]);
+    free(Ctab);
+
+    return tab;
 }
 
 
@@ -202,7 +213,18 @@ Point** moveBorderIsLive(Point **tab, int sizeX, int sizeY)
         }
     }
 
-    return Ctab;
+    for(int i = 0; i < sizeY; i++)
+        for(int j = 0; j < sizeX; j++)
+        {
+            Ctab[i][j].state = tab[i][j].state;
+            Ctab[i][j].color = tab[i][j].color;
+        }
+
+    for(int i = 0; i < sizeY; i++)
+        free(Ctab[i]);
+    free(Ctab);
+
+    return tab;
 }
 
 
