@@ -14,6 +14,8 @@ int main(int argc, char *argv[])
     FILE *in = argc > 1 ? fopen(argv[1], "r") : NULL;
     if(!in)
     {
+        fprintf(stderr, "Program zostal wywolany w niepoprawny sposob, prosze dodac plik z danymi konfiguracyjnymi\n");
+        fprintf(stderr, "Format wyowalania programu: ./a.out plik.txt\nlub na windows: a.exe plik.txt\n");
         fprintf(stderr, "Cannot open a file: \"%s\" with input data", argv[1]);
         fclose(in);
         return 1;
@@ -42,7 +44,7 @@ int main(int argc, char *argv[])
         while(true)
         {
             printf("iteration: %d\n", i++);
-            tab = moveBorderIsLive(tab, sizeX, sizeY);
+            moveBorderIsLive(tab, sizeX, sizeY);
             showTable(tab, sizeX, sizeY);
 
             Sleep(100);
@@ -55,7 +57,7 @@ int main(int argc, char *argv[])
         while(true)
         {
             printf("iteration: %d\n", i++);
-            tab = moveBorderIsDead(tab, sizeX, sizeY);
+            moveBorderIsDead(tab, sizeX, sizeY);
             showTable(tab, sizeX, sizeY);
 
             Sleep(100);

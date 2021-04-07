@@ -64,7 +64,7 @@ Point** readPoint(FILE *in, int sizeX, int sizeY)
 }
 
 
-Point** moveBorderIsDead(Point **tab, int sizeX, int sizeY)
+void moveBorderIsDead(Point **tab, int sizeX, int sizeY)
 {
     int counter = 0;
 
@@ -132,12 +132,10 @@ Point** moveBorderIsDead(Point **tab, int sizeX, int sizeY)
     for(int i = 0; i < sizeY; i++)
         free(Ctab[i]);
     free(Ctab);
-
-    return tab;
 }
 
 
-Point** moveBorderIsLive(Point **tab, int sizeX, int sizeY)
+void moveBorderIsLive(Point **tab, int sizeX, int sizeY)
 {
     int counter = 0;
 
@@ -223,8 +221,6 @@ Point** moveBorderIsLive(Point **tab, int sizeX, int sizeY)
     for(int i = 0; i < sizeY; i++)
         free(Ctab[i]);
     free(Ctab);
-
-    return tab;
 }
 
 

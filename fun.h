@@ -56,8 +56,8 @@ Argumenty:
 int** - tablica z punktami
 int, int - rozmiar tablicy wczytany wczesniej
 */
-Point** moveBorderIsLive(Point**, int, int);   //dla granicy zywej
-Point** moveBorderIsDead(Point**, int, int);   //dla granicy martwej
+void moveBorderIsLive(Point**, int, int);   //dla granicy zywej
+void moveBorderIsDead(Point**, int, int);   //dla granicy martwej
 
 
 /*Funkja rysujaca na ekranie plansze
