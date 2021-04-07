@@ -39,27 +39,28 @@ int main(int argc, char *argv[])
     int i = 1;
     if(border) 
     { //granice zywe
-        
-        while(true)
+       int g=0; 
+        while(g!=10)
         {
             printf("iteration: %d\n", i++);
             tab = moveBorderIsLive(tab, sizeX, sizeY);
-            //showTable(tab, sizeX, sizeY);
-
+            showTable(tab, sizeX, sizeY);
+		printf("%s \n", tab[6][6].color);
             //Sleep(100);
             //system("cls");
+	    g++;
         }
-
+	generate_png(tab, sizeX, sizeY);
     }
     else
     { //granice martwe
     int g=0;
-        while(g!=100)
+        while(g!=25)
         {
             printf("iteration: %d\n", i++);
             tab = moveBorderIsDead(tab, sizeX, sizeY);
-            //showTable(tab, sizeX, sizeY);
-
+            showTable(tab, sizeX, sizeY);
+		printf("%s \n", tab[6][6].color);
             //Sleep(100);
             //system("cls");
             g++;
