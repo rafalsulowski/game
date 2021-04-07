@@ -11,4 +11,4 @@ make_png.o: make_png.c make_png.h
 .PHONY: clean
 
 clean:
-    rm -f prog main.o fun.o make_png.o
+	rm -f prog main.o fun.o make_png.o
